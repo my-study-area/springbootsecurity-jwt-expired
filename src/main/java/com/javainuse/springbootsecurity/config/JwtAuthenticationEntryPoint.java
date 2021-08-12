@@ -25,16 +25,34 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
 		String message;
+		
+		// Check if the request as any exception that we have stored in Request
+		final Exception exception = (Exception) request.getAttribute("exception");
 
-		if (authException.getCause() != null) {
-			message = authException.getCause().toString() + " " + authException.getMessage();
+		// If yes then use it to create the response message else use the authException
+		if (exception != null) {
+			if (exception.getCause() != null) {
+				message = exception.getCause().toString() + " " + exception.getMessage();
+			} else {
+				message = exception.getMessage();
+			}
+			
+			byte[] body = new ObjectMapper()
+					.writeValueAsBytes(Collections.singletonMap("error", message));
+			response.getOutputStream().write(body);
 		} else {
-			message = authException.getMessage();
+			if (authException.getCause() != null) {
+				message = authException.getCause().toString() + " " + authException.getMessage();
+			} else {
+				message = authException.getMessage();
+			}
+
+			byte[] body = new ObjectMapper().writeValueAsBytes(Collections.singletonMap("error", message));
+
+			response.getOutputStream().write(body);
+			
 		}
-
-		byte[] body = new ObjectMapper().writeValueAsBytes(Collections.singletonMap("error", message));
-
-		response.getOutputStream().write(body);
+		
 	}
 
 }
