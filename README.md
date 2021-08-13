@@ -14,6 +14,8 @@ Implementação de Spring Boot + Spring Security + JSON Web Token exibindo mensa
 
 Toda a aplicação foi desenvolvido com base no post [Implement Spring Boot + JSON Web Token Security](https://www.javainuse.com/webseries/spring-security-jwt/chap4)
 
+Os arquivos alterados para permitir a exibição de mensagem de erro para token expirado pode ser acompanhada no commit [34b6aae](https://github.com/my-study-area/springbootsecurity-jwt-expired/commit/34b6aae).
+
 ## Tecnologias
 - Spring Boot
 - Spring Security
